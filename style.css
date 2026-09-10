@@ -113,7 +113,6 @@ body.spin-page {
 .wheel-inner img {
     width: 110px;
     border-radius: 50%;
-    transform: rotate(180deg);
 }
 
 .slice-text {
