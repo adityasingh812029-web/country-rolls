@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Spin & Win - Country Rolls</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Poppins:wght@600;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/style.css">
+</head>
+<body class="spin-page">
+    <!-- Registration Overlay -->
+    <div id="registration-overlay" class="modal-overlay active" style="background: rgba(255, 199, 44, 0.95); backdrop-filter: blur(10px); z-index: 200;">
+        <div class="modal-content premium-card">
+            <img src="/images/transparent_logo.png" alt="Country Rolls" class="spin-logo modal-logo">
+            <h2>Register to Spin!</h2>
+            <p>Enter your name and phone number below to unlock your free spin.</p>
+            <form id="registration-form">
+                <input type="text" id="user-name" placeholder="Full Name" required>
+                <input type="tel" id="user-phone" placeholder="Phone Number" required>
+                <button type="submit" class="spin-btn" style="position: relative; bottom: 0; margin-top: 20px;">LET'S GO</button>
+            </form>
+        </div>
+    </div>
+
+    <header class="spin-header">
+        <img src="/images/transparent_logo.png" alt="Country Rolls Logo" class="spin-logo primary-logo">
+        <h1>Spin & Win!</h1>
+        <p>Spin the wheel for a chance to win exclusive discounts and free food.</p>
+    </header>
+
+    <main class="wheel-container">
+        <div class="wheel-pointer"></div>
+        <div class="wheel" id="wheel">
+            <!-- Slices injected by JS -->
+            <div class="wheel-inner">
+                <img src="/images/center_logo.png" alt="Logo">
+            </div>
+        </div>
+        <button id="spin-btn" class="spin-btn">SPIN NOW</button>
+    </main>
+
+    <!-- Winner Modal -->
+    <div id="winner-modal" class="modal-overlay" style="backdrop-filter: blur(10px);">
+        <div class="modal-content premium-card">
+            <h2 id="win-title">You Won!</h2>
+            <p id="win-description">Claim your exclusive reward now.</p>
+                <p style="font-size: 0.9rem; color: #666; margin-bottom: 5px;">Your Unique Winning Code:</p>
+                <div class="code-box" style="background: #f8f9fa; border: 2px dashed #FFC72C; padding: 15px; border-radius: 10px; margin-bottom: 10px; display: flex; justify-content: space-between; align-items: center;">
+                    <span id="win-code" style="font-family: monospace; font-size: 1.2rem; font-weight: bold; color: #111;">C001</span>
+                    <button id="copy-btn" style="background: #111; color: white; border: none; padding: 8px 15px; border-radius: 5px; cursor: pointer; font-weight: bold;">Copy</button>
+                </div>
+                
+                <p style="color: red; font-weight: 900; margin-bottom: 20px; font-size: 1rem;">🚨 VALID FOR 48 HOURS ONLY!</p>
+                
+                <p class="terms" style="font-size: 0.7rem; color: #999; margin-bottom: 15px;">*Show this code to the cashier to claim. Cannot be combined with other offers.</p>
+                <button id="close-modal" class="close-btn-styled">Awesome!</button>
+            </div>
+        </div>
+
+    <!-- Canvas Confetti -->
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+    <script type="module" src="/script.js"></script>
+</body>
+</html>

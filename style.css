@@ -1,0 +1,381 @@
+:root {
+    --primary-yellow: #FFC72C;
+    --black: #111111;
+    --white: #FFFFFF;
+    --dark-grey: #2B2B2B;
+    --light-grey: #F8F8F8;
+    --shadow-soft: 0 10px 30px rgba(0, 0, 0, 0.15);
+}
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+body.spin-page {
+    font-family: 'Futura', 'Trebuchet MS', sans-serif;
+    background-color: var(--primary-yellow);
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+    padding: 0px 0 100px 0;
+    overflow-x: hidden;
+    overflow-y: auto;
+    color: var(--black);
+}
+
+.spin-header {
+    text-align: center;
+    margin-bottom: 40px;
+    padding: 0 20px;
+}
+
+/* Primary Page Logo (Desktop) */
+.primary-logo {
+    width: 240px;
+    height: auto;
+    margin-top: -30px;
+    margin-bottom: -20px;
+}
+
+/* Registration Form Logo (Desktop) */
+.modal-logo {
+    width: 240px;
+    height: auto;
+    margin-top: -30px;
+    margin-bottom: -20px;
+}
+
+.spin-header h1 {
+    font-family: 'Futura', 'Trebuchet MS', sans-serif;
+    font-size: 2.4rem;
+    font-weight: 900;
+    margin-bottom: 10px;
+    text-transform: uppercase;
+}
+
+.spin-header p {
+    font-size: 1.1rem;
+    color: var(--dark-grey);
+    max-width: 400px;
+    margin: 0 auto;
+}
+
+.wheel-container {
+    position: relative;
+    width: 450px;
+    height: 450px;
+    margin-bottom: 20px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.wheel-pointer {
+    position: absolute;
+    top: -20px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 0; 
+    height: 0; 
+    border-left: 20px solid transparent;
+    border-right: 20px solid transparent;
+    border-top: 40px solid #F44336;
+    z-index: 10;
+    filter: drop-shadow(0 5px 5px rgba(0,0,0,0.3));
+}
+
+.wheel {
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;
+    border: 8px solid var(--black);
+    box-shadow: 0 0 0 10px var(--primary-yellow), var(--shadow-soft);
+    position: relative;
+    overflow: hidden;
+    /* Buttery smooth 5 second spin */
+    transition: transform 5s cubic-bezier(0.25, 0.1, 0.15, 1);
+}
+
+.wheel-inner {
+    position: absolute;
+    top: 50%; left: 50%;
+    width: 130px; height: 130px;
+    background: var(--primary-yellow);
+    border-radius: 50%;
+    transform: translate(-50%, -50%);
+    border: 5px solid var(--black);
+    z-index: 5;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.wheel-inner img {
+    width: 110px;
+    border-radius: 50%;
+}
+
+.slice-text {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    font-family: 'Futura', 'Trebuchet MS', sans-serif;
+    font-weight: 800;
+    font-size: 0.8rem;
+    color: var(--black);
+    text-transform: uppercase;
+    white-space: pre-wrap;
+    text-align: center;
+    line-height: 1.2;
+    z-index: 2;
+    transform: translate(-50%, -50%) rotate(var(--rot)) translateX(145px);
+}
+
+.peg {
+    position: absolute;
+    top: 50%; left: 50%;
+    width: 14px; height: 14px;
+    background: var(--primary-yellow);
+    border: 3px solid var(--black);
+    border-radius: 50%;
+    z-index: 10;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.5);
+    transform: translate(-50%, -50%) rotate(var(--rot)) translateY(-215px);
+}
+
+.spin-btn {
+    background: linear-gradient(135deg, #FFD700 0%, #FF8C00 100%);
+    color: var(--black);
+    font-family: 'Poppins', sans-serif;
+    font-size: 1.3rem;
+    font-weight: 800;
+    padding: 12px 40px;
+    border: none;
+    border-radius: 50px;
+    cursor: pointer;
+    box-shadow: 0 10px 20px rgba(255, 140, 0, 0.4), inset 0 -3px 0 rgba(0,0,0,0.1);
+    transition: transform 0.2s, box-shadow 0.2s;
+    text-transform: uppercase;
+    position: absolute;
+    bottom: -60px;
+    z-index: 20;
+}
+
+.spin-btn:hover:not(:disabled) {
+    transform: scale(1.05) translateY(-2px);
+    box-shadow: 0 15px 25px rgba(255, 140, 0, 0.5), inset 0 -3px 0 rgba(0,0,0,0.1);
+}
+
+.spin-btn:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+    transform: scale(0.95);
+    box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+}
+
+/* Modal */
+.modal-overlay {
+    position: fixed;
+    top: 0; left: 0; width: 100%; height: 100%;
+    background: rgba(0,0,0,0.8);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 100;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.3s;
+}
+
+.modal-overlay.active {
+    opacity: 1;
+    pointer-events: all;
+}
+
+.modal-content {
+    background: var(--white);
+    padding: 40px;
+    border-radius: 20px;
+    text-align: center;
+    max-width: 400px;
+    width: 90%;
+    transform: scale(0.8);
+    transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+.premium-card {
+    box-shadow: 0 20px 50px rgba(0,0,0,0.2), 0 0 0 10px rgba(255,255,255,0.3);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.modal-overlay.active .modal-content {
+    transform: scale(1);
+}
+
+.modal-content h2 {
+    font-family: 'Poppins', sans-serif;
+    color: var(--primary-yellow);
+    font-size: 2.5rem;
+    margin-bottom: 10px;
+    -webkit-text-stroke: 1px var(--black);
+}
+
+.code-box {
+    background: var(--light-grey);
+    border: 2px dashed var(--black);
+    padding: 15px;
+    border-radius: 10px;
+    margin: 20px 0;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.code-box span {
+    font-family: monospace;
+    font-weight: 800;
+    font-size: 1.2rem;
+    color: var(--black);
+}
+
+.copy-btn {
+    background: var(--black);
+    color: var(--white);
+    border: none;
+    padding: 8px 15px;
+    border-radius: 5px;
+    cursor: pointer;
+    font-weight: 600;
+}
+
+.secondary-btn {
+    position: relative;
+    bottom: 0;
+    font-size: 1.1rem;
+    padding: 10px 30px;
+    margin-top: 10px;
+}
+
+.terms {
+    font-size: 0.8rem;
+    color: #666;
+}
+
+.close-btn-styled {
+    background: linear-gradient(135deg, #FFD700 0%, #FF8C00 100%);
+    color: var(--black);
+    font-family: 'Futura', 'Trebuchet MS', sans-serif;
+    font-size: 1.2rem;
+    font-weight: 800;
+    padding: 12px 30px;
+    border: none;
+    border-radius: 50px;
+    cursor: pointer;
+    box-shadow: 0 10px 20px rgba(255, 140, 0, 0.4);
+    text-transform: uppercase;
+    margin-top: 20px;
+    width: 100%;
+}
+
+#registration-form {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    margin-top: 20px;
+}
+#registration-form input {
+    padding: 15px;
+    border: 2px solid var(--black);
+    border-radius: 10px;
+    font-family: 'Inter', sans-serif;
+    font-size: 1.1rem;
+    outline: none;
+    text-align: center;
+}
+#registration-form input:focus {
+    border-color: var(--primary-yellow);
+}
+
+@media (max-width: 500px) {
+    .wheel-container {
+        width: 280px;
+        height: 280px;
+        margin-bottom: 80px;
+    }
+    .wheel {
+        width: 100%;
+        height: 100%;
+        border-width: 6px;
+        box-shadow: 0 0 0 10px rgba(255, 199, 44, 0.4), 0 15px 35px rgba(0,0,0,0.3);
+    }
+    .wheel-pointer {
+        top: -15px;
+        border-width: 20px 12px 0;
+    }
+    .wheel-inner {
+        width: 75px;
+        height: 75px;
+    }
+    .wheel-inner img {
+        width: 60px;
+    }
+    body.spin-page {
+        padding-top: 0px;
+        padding-bottom: 20px;
+    }
+    .spin-header {
+        margin-bottom: 15px;
+    }
+    .spin-header h1 {
+        font-size: 2.0rem;
+        margin-bottom: 5px;
+    }
+    .spin-header p {
+        font-size: 0.95rem;
+    }
+    .spin-logo {
+        width: 220px;
+        height: auto;
+        margin-top: -40px;
+        margin-bottom: -25px;
+    }
+    .peg {
+        transform: translate(-50%, -50%) rotate(var(--rot)) translateY(-135px);
+    }
+    .slice-text {
+        font-size: 0.65rem;
+        transform: translate(-50%, -50%) rotate(var(--rot)) translateX(88px);
+    }
+    .spin-btn {
+        font-size: 1.1rem;
+        padding: 10px 30px;
+        bottom: -80px;
+        box-shadow: 0 15px 30px rgba(255, 140, 0, 0.5), inset 0 -3px 0 rgba(0,0,0,0.1);
+    }
+    .secondary-btn {
+        position: relative !important;
+        bottom: 0 !important;
+        margin-top: 20px !important;
+        width: 100%;
+        font-size: 1.1rem;
+        padding: 15px 30px;
+    }
+    .premium-card {
+        padding: 25px 15px;
+        border-radius: 20px;
+        width: 95%;
+    }
+    .modal-content {
+        padding: 25px 15px;
+        width: 95%;
+    }
+    .code-box {
+        flex-direction: column;
+        gap: 10px;
+        padding: 10px;
+    }
+    .code-box span {
+        font-size: 1rem;
+        word-break: break-all;
+    }
+}
